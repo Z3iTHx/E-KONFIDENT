@@ -83,7 +83,7 @@ body {
     line-height: 25px;
     letter-spacing: 1px;
     font-size: 18px;
-    text-align: justify;
+    text-align: center;
 }
 
 .form-box {
@@ -164,5 +164,10 @@ input[type='checkbox'] {
     text-align: center;
     line-height: 40px;
     font-weight: 800;
+}
+
+#php-alert {
+    text-align: center;
+    font: 8px;
 }
 

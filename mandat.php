@@ -35,8 +35,8 @@
             Sprawdź jaki mandat dostaniesz za przekroczenie prędkości 
         </p>
         <section class="form-box">
-            <form action="" method="POST">
-                <input max="450" min="0" class="speed" id="speedL" type="number" name="speed" placeholder="0">
+            <form action="" id="noreset" method="POST">
+                <input data-reset="false" max="450" min="0" class="speed" id="speedL" type="number" name="speed" placeholder="0">
                 <input max="140" min="10" class="speed" id="speedR" type="number" value="50" name="limit"> <br> <br> <br> <br> <br> <br>
                 <section class="checkbox-box">
                     </label><input type="checkbox" name="village" class="input"> <label>W zabudowanym?</label>
@@ -54,35 +54,50 @@
                             $speed = (int)$_POST["speed"];
                             $limit = (int)$_POST["limit"];
                             $dif = $speed - $limit;
+                            
+                            $rec = isset($_POST["recidivism"]);
+
+                            if($dif <= 0) {
+                                echo "0 PLN";
+                            } elseif($dif >= 31 and $dif <= 40 and $rec=="true") {
+                                echo "1600PLN";
+                            } elseif($dif >= 41 and $dif <= 50 and $rec=="true") {
+                                echo "2000PLN";
+                            } elseif($dif >= 51 and $dif <= 60 and $rec=="true") {
+                                echo "3000PLN";
+                            } elseif($dif >= 61 and $dif <= 70 and $rec=="true") {
+                                echo "4000PLN";
+                            } elseif($dif >= 71 and $rec=="true") {
+                                echo "5000PLN";
+                            } elseif($dif <= 10) {
+                                echo "50 PLN";
+                            } elseif($dif >= 11 and $dif <= 15) {
+                                echo "100 PLN";
+                            } elseif($dif >= 16 and $dif <= 20) {
+                                echo "200 PLN";
+                            } elseif($dif >= 21 and $dif <= 25) {
+                                echo "300 PLN";
+                            } elseif($dif >= 26 and $dif <= 30) {
+                                echo "400 PLN";
+                            } elseif($dif >= 31 and $dif <= 40) {
+                                echo "800 PLN";
+                            } elseif($dif >= 41 and $dif <= 50) {
+                                echo "1000 PLN";
+                            } elseif($dif >= 51 and $dif <= 60) {
+                                echo "1500 PLN";
+                            } elseif($dif >= 61 and $dif <= 70) {
+                                echo "2000 PLN";
+                            } elseif($dif >= 71) {
+                                echo "2500 PLN";
+                            }
                         }
-                        if($dif <= 0) {
-                            echo "0 PLN";
-                        } elseif($dif <= 10) {
-                            echo "50 PLN";
-                        } elseif($dif >= 11 and $dif <= 15) {
-                            echo "100 PLN";
-                        } elseif($dif >= 16 and $dif <= 20) {
-                            echo "200 PLN";
-                        } elseif($dif >= 21 and $dif <= 25) {
-                            echo "300 PLN";
-                        } elseif($dif >= 26 and $dif <= 30) {
-                            echo "400 PLN";
-                        } elseif($dif >= 31 and $dif <= 40) {
-                            echo "800 PLN";
-                        } elseif($dif >= 41 and $dif <= 50) {
-                            echo "1000 PLN";
-                        } elseif($dif >= 51 and $dif <= 60) {
-                            echo "1500 PLN";
-                        } elseif($dif >= 61 and $dif <= 70) {
-                            echo "2000 PLN";
-                        } elseif($dif >= 71) {
-                            echo "2500 PLN";
-                        }
+
                     ?>
                    
                 </section>
                 <section id="PKT" class="form-output">
                     <?php
+                     if(isset($_POST["submit"])) { 
                         if($dif <= 0) {
                             echo "0 PKT";
                         } elseif($dif <= 10) {
@@ -105,18 +120,34 @@
                             echo "14 PKT";
                         } elseif($dif >= 71) {
                             echo "15 PKT";
-                        }
+                        } 
+                     }
+                        
                     ?>
                 </section>
             </section>
 
             <section id="php-alert">
+                <?php
+                    if(isset($_POST["submit"])) {
+                        if(isset($_POST["village"]) and $dif > 50) {
+                            echo "Uprawnienia zostaną wstrzymane na 3 mies. <br>";
+                        } 
+                    }
 
+                    if(isset($_POST["submit"])) {
+                        if(isset($_POST["recidivism"]) and $dif >= 31) {
+                            echo "Recydywa, grzywna została podwojona <br>";
+                        } 
+                    }
+                ?>
             </section>
         </section>
 
     </section>
 
+
+    <script src="js/script.js"></script>
     <!--PHP SECTION-->
 
     <footer class="footer">
